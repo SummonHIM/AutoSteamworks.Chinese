@@ -65,29 +65,29 @@ namespace AutoSteamApp
 
         private static void WriteMenu()
         {
-            Console.Title = $"Currently built for version: ({Settings.SupportedGameVersion})";
-            Console.WriteLine($"Currently built for version: {Settings.SupportedGameVersion}");
+            Console.Title = $"当前软件适配版本：({Settings.SupportedGameVersion})";
+            Console.WriteLine($"当前软件适配版本：{Settings.SupportedGameVersion}");
 
             Console.WriteLine(string.Empty);
 
             Console.WriteLine(
                 string.Format(
-                    "Based on the current settings, this run will consume: {0} fuel. If this was not intended, please change AutoSteamApp.exe.config.",
-                    Settings.ShouldConsumeAllFuel ? "ALL the available" : "ONLY the Natural"));
+                    "基于当前设置，此次运行会消耗：{0}燃料。如果这不是想要的设置话，请修改 AutoSteamApp.exe.config。",
+                    Settings.ShouldConsumeAllFuel ? "全部可用的" : "仅天然的"));
             Console.WriteLine(string.Empty);
 
             WriteSeparator();
-            Console.WriteLine($"Please select the type of run you want. When the run is finished, the app will close.");
+            Console.WriteLine($"请选择想要的启动类型。若运行结束，应用会自动退出。");
 
             WriteSeparator();
-            Console.WriteLine($"Press '{((KeyCode)Settings.KeyCodeStart).ToString()}' to ->");
-            Console.WriteLine($"        Run with 100% Accuracy (requires correct game version)");
+            Console.WriteLine($"按下 '{((KeyCode)Settings.KeyCodeStart).ToString()}' 键来 ->");
+            Console.WriteLine($"        开启 100% 准确率模式 （需要相同的适配版本）");
 
-            Console.WriteLine($"Press '{((KeyCode)Settings.KeyCodeStartRandom).ToString()}' to ->");
-            Console.WriteLine($"        Do a RANDOM run. This method will give unpredictable results, there is no check for values.");
+            Console.WriteLine($"按下 '{((KeyCode)Settings.KeyCodeStartRandom).ToString()}' 键来 ->");
+            Console.WriteLine($"        开启随机模式。因为不读取游戏内存值，所以结果也会是无法预料的。");
             WriteSeparator();
 
-            Console.WriteLine($"Press '{((KeyCode)Settings.KeyCodeStop).ToString()}' to end typing");
+            Console.WriteLine($"按下 '{((KeyCode)Settings.KeyCodeStop).ToString()}' 键来结束");
         }
 
         private static void WriteSeparator()
@@ -115,12 +115,12 @@ namespace AutoSteamApp
                     IsCorrectVersion = false;
 
                     var currentVersion = int.Parse(mhw.MainWindowTitle.Split('(')[1].Replace(")", ""));
-                    Logger.LogError($"Currently built for version: {Settings.SupportedGameVersion}. This game version ({currentVersion}) is not supported YET!");
+                    Logger.LogError($"当前软件适配版本：{Settings.SupportedGameVersion}。当前游戏版本 ({currentVersion}) 暂不支持！");
 
                     if (IsSmartRun)
                     {
-                        Logger.LogError($"However, if you still want to use the application, please trigger a Random Run from the menu.");
-                        Logger.LogError($"That will push buttons randomly, which is still better than nothing.");
+                        Logger.LogError($"但是，如果您仍想使用该应用程序，请从菜单中使用随机运行模式。");
+                        Logger.LogError($"只能说，有随机模式好过没有…");
 
                         mhw = null;
                     }
@@ -131,7 +131,7 @@ namespace AutoSteamApp
 
                     if (!IsSmartRun)
                     {
-                        Logger.LogError($"Smart Random run selected.");
+                        Logger.LogError($"已选择智能随机模式。");
                         
                         return;
                     }
@@ -231,7 +231,7 @@ namespace AutoSteamApp
 
                     if (ordered == null)
                     {
-                        Logger.LogInfo("The Steamworks minigame is not started. Please enter the minigame and Press 'Space' so that you see the first letters on your screen.");
+                        Logger.LogInfo("蒸汽机未启动。请进入蒸汽机并按下“空格”键直至屏幕显示第一个按键即可。");
 
                         // try again..
                         continue;
@@ -258,7 +258,7 @@ namespace AutoSteamApp
                         }
                         catch (Exception ex)
                         {
-                            Logger.LogError($"Error trying to press button sequence -> {ex.Message}");
+                            Logger.LogError($"尝试按下按键组合时出错 -> {ex.Message}");
                         }
                     }
 
@@ -295,8 +295,8 @@ namespace AutoSteamApp
                                 {
                                     Logger.LogInfo(
                                         string.Format(
-                                            "No more {0}fuel, stopping bot.",
-                                            Settings.ShouldConsumeAllFuel == false ? "Natural " : string.Empty));
+                                            "没有多余的{0}燃料了，程序已停止。",
+                                            Settings.ShouldConsumeAllFuel == false ? "天然" : string.Empty));
 
                                     shouldStop = true;
                                     break;
@@ -317,7 +317,7 @@ namespace AutoSteamApp
                         }
                         catch (Exception ex)
                         {
-                            Logger.LogError($"Trying to finish up combo: {ex.Message}");
+                            Logger.LogError($"正在尝试完成按键组合：{ex.Message}");
                         }
                     }
                 }
@@ -369,13 +369,13 @@ namespace AutoSteamApp
                 }
 
                 var ordered = keyOrder.OrderBy(x => x.Value).ToList();
-                Logger.LogInfo($"Pressing {string.Join(" -> ", ordered.Take(3).Select(x => x.Key.ToString()))}");
+                Logger.LogInfo($"正在按下 {string.Join(" -> ", ordered.Take(3).Select(x => x.Key.ToString()))}");
 
                 return ordered;
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Extracting Correct Sequence: {ex.Message}");
+                Logger.LogError($"正在提取正确的按键组合：{ex.Message}");
 
                 return null;
             }
@@ -385,14 +385,14 @@ namespace AutoSteamApp
         {
             while (!IsCurrentActiveMHW())
             {
-                Logger.LogInfo("MHW not active/focused. Waiting ...");
+                Logger.LogInfo("MHW 未在前台运行。等待中…");
             }
 
-            Logger.LogInfo($"Pressing: {key}!");
+            Logger.LogInfo($"正在按下：{key}！");
 
             if (Settings.UseBackgroundKeyPress)
             {
-                Logger.LogInfo($"You cheeky bastard. This doesn't work yet ..Please switch the flag back.");
+                Logger.LogInfo($"你个混蛋。这玩意没法用… 请将标志切换回去。");
                 //mhw.WaitForInputIdle();
                 //var keyMap = new Key((Messaging.VKeys)key);
 
@@ -424,7 +424,7 @@ namespace AutoSteamApp
                         shouldStart = true;
                         IsSmartRun = true;
 
-                        Logger.LogInfo(string.Format("Captured Start for 100% accuracy run consuming >>{0}<< fuel!", Settings.ShouldConsumeAllFuel ? "ALL the available" : "ONLY the Natural"));
+                        Logger.LogInfo(string.Format("检测到按下 100% 准确率模式，将消耗 >>{0}<< 燃料！", Settings.ShouldConsumeAllFuel ? "全部可用的" : "仅天然的"));
                     }
 
                     if (character.KeyCode == (KeyCode)Settings.KeyCodeStartRandom)
@@ -432,7 +432,7 @@ namespace AutoSteamApp
                         shouldStart = true;
                         IsSmartRun = false;
 
-                        Logger.LogInfo(string.Format("Captured Start for RANDOM run consuming >>{0}<< fuel!", Settings.ShouldConsumeAllFuel ? "ALL the available" : "ONLY the Natural"));
+                        Logger.LogInfo(string.Format("检测到按下随机模式，将消耗 >>{0}<< 燃料！", Settings.ShouldConsumeAllFuel ? "全部可用的" : "仅天然的"));
                     }
 
                     if (character.KeyCode == (KeyCode)Settings.KeyCodeStop)
@@ -442,7 +442,7 @@ namespace AutoSteamApp
                         shouldStart = true;
                         shouldStop = true;
 
-                        Logger.LogInfo($"Captured Stop execution. Exiting..!");
+                        Logger.LogInfo($"检测到按下退出。正在退出…");
 
                         Application.Exit();
                     }
@@ -461,10 +461,10 @@ namespace AutoSteamApp
             }
             catch
             {
-                Logger.LogError($"Error trying to find '{ProcessName}' process.");
+                Logger.LogError($"尝试查找 '{ProcessName}' 进程时出错。");
             }
 
-            Logger.LogError($"Looks like the game is not running. It should...");
+            Logger.LogError($"看起来游戏还没开始运行。应该…");
 
             return null;
         }

@@ -43,7 +43,7 @@ namespace AutoSteamApp
             DateTime dt = DateTime.Now;
             while (CurrentSlot == -1 && !cts.IsCancellationRequested)
             {
-                Logger.LogInfo($"Awaiting slot number!");
+                Logger.LogInfo($"正在等待槽位号码！");
                 Thread.Sleep(1000);
 
                 for (int slotId = 0; slotId < 3; slotId++)
@@ -59,7 +59,7 @@ namespace AutoSteamApp
                         if (slotPlayTimes[slotId] != p1Value)
                         {
                             CurrentSlot = slotId;
-                            Logger.LogInfo($"Identified slot number: {slotId + 1}");
+                            Logger.LogInfo($"已识别到槽位号码：{slotId + 1}");
 
                             return;
                         }
@@ -67,7 +67,7 @@ namespace AutoSteamApp
 
                 if (dt.AddSeconds(10) < DateTime.Now)
                 {
-                    Logger.LogInfo($"Slot Number couldn't be found after 10 seconds!");
+                    Logger.LogInfo($"未在 10 秒内找到槽位号码！");
                 }
             }
         }

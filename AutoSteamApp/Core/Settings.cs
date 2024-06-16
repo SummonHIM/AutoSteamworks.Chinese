@@ -122,12 +122,12 @@ namespace AutoSteamApp.Core
                         }
                         catch (Exception ex)
                         {
-                            Logger.LogError($"Invalid number for 'Start' keycode: [{_keyCodeStart}]. Will use default instead! Exception: {ex.Message}");
+                            Logger.LogError($"无法设置“开始”键为：[{_keyCodeStart}]。将恢复为默认按键！错误异常原因：{ex.Message}");
                         }
                     }
                     else
                     {
-                        Logger.LogError($"Invalid number for 'Start' keycode: [{ConfigurationManager.AppSettings["keyCodeStart"]}]. Will use default instead!");
+                        Logger.LogError($"无法设置“开始”键为：[{ConfigurationManager.AppSettings["keyCodeStart"]}]。将恢复为默认按键！");
                     }
                 }
 
@@ -154,12 +154,12 @@ namespace AutoSteamApp.Core
                         }
                         catch (Exception ex)
                         {
-                            Logger.LogError($"Invalid number for 'StartRandom' keycode: [{_keyCodeStartRandom}]. Will use default (F2) instead! Exception: {ex.Message}");
+                            Logger.LogError($"无法设置“随机开始”键为：[{_keyCodeStartRandom}]。将恢复为默认按键 (F2)！错误异常原因：{ex.Message}");
                         }
                     }
                     else
                     {
-                        Logger.LogError($"Invalid number for 'StartRandom' keycode: [{ConfigurationManager.AppSettings["keyCodeStartNatural"]}]. Will use default (F2) instead!");
+                        Logger.LogError($"无法设置“随机开始”键为：[{ConfigurationManager.AppSettings["keyCodeStartNatural"]}]。将恢复为默认按键 (F2)！");
                     }
                 }
 
@@ -188,13 +188,13 @@ namespace AutoSteamApp.Core
                         }
                         catch (Exception ex)
                         {
-                            Logger.LogError($"Invalid number for 'Stop' keycode: [{_keyCodeStop}]. Will use default instead! Exception: {ex.Message}");
+                            Logger.LogError($"无法设置“停止”键为：[{_keyCodeStop}]。将恢复为默认按键！错误异常原因：{ex.Message}");
                         }
                     }
                 }
                 else
                 {
-                    Logger.LogError($"Invalid number for 'Stop' keycode: [{ConfigurationManager.AppSettings["keyCodeStop"]}]. Will use default instead!");
+                    Logger.LogError($"无法设置“停止”键为：[{ConfigurationManager.AppSettings["keyCodeStop"]}]。将恢复为默认按键！");
                 }
 
                 return (_keyCodeStop = 27);
@@ -220,13 +220,13 @@ namespace AutoSteamApp.Core
                         }
                         catch (Exception ex)
                         {
-                            Logger.LogError($"Invalid number for 'CutsceneSkip' keycode: [{_keyCutsceneSkip}]. Will use default instead! Exception: {ex.Message}");
+                            Logger.LogError($"无法设置“跳过动画”键为：[{_keyCutsceneSkip}]。将恢复为默认按键！错误异常原因：{ex.Message}");
                         }
                     }
                 }
                 else
                 {
-                    Logger.LogError($"Invalid number for 'CutsceneSkip' keycode: [{ConfigurationManager.AppSettings["keyCutsceneSkip"]}]. Will use default instead!");
+                    Logger.LogError($"无法设置“跳过动画”键为：[{ConfigurationManager.AppSettings["keyCutsceneSkip"]}]。将恢复为默认按键！");
                 }
 
                 return (_keyCutsceneSkip = 88);
